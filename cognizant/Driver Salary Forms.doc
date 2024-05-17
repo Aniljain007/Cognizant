@@ -1,0 +1,396 @@
+<!-- MyPay Master Page-->
+
+<!-- Master Page path-->
+
+<!--Document type-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en">
+<head id="Head1"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+   
+    <script type="text/javascript">
+        if (document.URL.toString().indexOf('Default.aspx') > -1 || document.URL.toString().indexOf('MyForms.aspx') > -1) {
+            document.write(unescape("%3Cscript src='Scripts/jquery-3.7.1.js' type='text/javascript'%3E%3C/script%3E"));            
+            document.write(unescape("%3Cscript src='Scripts/jquery-migrate-3.4.0.min.js' type='text/javascript'%3E%3C/script%3E"));            
+            document.write(unescape("%3Cscript src='Scripts/jquery-ui-1.13.2.js' type='text/javascript'%3E%3C/script%3E"));
+        }
+        else {
+            document.write(unescape("%3Cscript src='../Scripts/jquery-3.7.1.js' type='text/javascript'%3E%3C/script%3E"));
+            document.write(unescape("%3Cscript src='../Scripts/jquery-migrate-3.4.0.min.js' type='text/javascript'%3E%3C/script%3E"));            
+            document.write(unescape("%3Cscript src='../Scripts/jquery-ui-1.13.2.js' type='text/javascript'%3E%3C/script%3E"));
+
+        }
+    </script> 
+    <link href="Styles/styles.css?v=4" rel="stylesheet" type="text/css" />
+    <script type="text/javascript">
+        ////function to load window
+var url = "/779";
+
+        $(window).load(function () {
+        var isPrvYr =$("#isPrv").val().toLowerCase();
+        var finyr = $("#finY").val();
+            if(isPrvYr == "true"){    
+                    $("#finyr").text("FY "+finyr.slice(0, 4)+"-"+finyr.slice(4, 6));
+                    $(".spaceClass").attr('src','/779PrevYrMyPay/images/spacer.png');
+                    $("#mylogo").attr('src','/779PrevYrMyPay/images/MyPay_logo.png');
+                    $("#defaultpage").attr('href','/779PrevYrMyPay/Default.aspx');
+               }else{
+                $(".spaceClass").attr('src','/779/images/spacer.png');
+                $("#mylogo").attr('src','/779/images/MyPay_logo.png');
+                $("#defaultpage").attr('href','/779/Default.aspx');
+                }
+
+            var prev_item, current_item;
+            if ($("#mypayMenu>ul>li").size() == 5) {
+                $("#mypayMenu>ul>li:eq(0)>a").addClass("fbp");
+                $("#mypayMenu>ul>li:eq(1)>a").addClass("updates");
+                $("#mypayMenu>ul>li:eq(2)>a").addClass("investments");
+                $("#mypayMenu>ul>li:eq(3)>a").addClass("statements");
+                $("#mypayMenu>ul>li:eq(4)>a").addClass("forms");
+            }
+            else {
+                $("#mypayMenu>ul>li:eq(0)>a").addClass("fbp");
+                $("#mypayMenu>ul>li:eq(1)>a").addClass("updates");
+                $("#mypayMenu>ul>li:eq(2)>a").addClass("statements");
+                $("#mypayMenu>ul>li:eq(3)>a").addClass("forms");
+            }
+            $(".menu-middle-wrapper>a").css("display", "none");
+            $("#adminMenu>a").css("display", "none");
+            var page_title = document.title.split(" ");
+            if (page_title == "")
+                current_item = "fbp";
+            else
+                current_item = page_title[1].toLowerCase();
+            ////Menu list funtion
+            $("#mypayMenu>ul>li>a").each(function () {
+                if ($(this).hasClass(current_item)) {
+                    $(this).addClass("active");
+                }
+            });
+            //Nav menu position for associates
+            /*if ($("#adminMenu").css("display") != "block") {
+            $("#wrapper #header").css("top", "0px");
+            }*/
+        });
+        /*
+  @function Document ready function
+  */
+        $(document).ready(function () {
+            $(".mask").css("height", $(document).height());
+            //$(".mask").hide();
+            $('#faq_popup').hide();
+            $('#bankers_popup').hide();
+            ////function for window position
+            $(window).scroll(function () {
+                var top_pos = (($(document).scrollTop()) + ($(window).height() * 25 / 100)) + "px";
+                $('#faq_popup').css("top", top_pos);
+                $('#bankers_popup').css("top", top_pos);
+            });
+
+$(document).keydown(function (event) {
+    if (event.keyCode == 123) { // Prevent F12
+        return false;
+    } else if (event.ctrlKey && event.shiftKey && event.keyCode == 73) { // Prevent Ctrl+Shift+I        
+        return false;
+    }
+});
+            ////function for popup close
+            $(".popup_close_btn").click(function () {
+                $(".mask").hide();
+                $("#popup_container1").prop("src", "");
+                $("#bank_container").prop("src", "");
+                $('#faq_popup').hide();
+                $('#bankers_popup').hide();
+                $(".popup_close_btn").hide();
+                $("body").css("overflow", "auto");
+            });
+        });
+
+        ////function for popup open
+        function show_faq_popup() {
+            $(".mask").show();
+            $('#faq_popup').show();
+            $(".popup_close_btn").show();
+            var isPrvYr =$("#isPrv").val().toLowerCase();
+            if(isPrvYr == "true")
+                {    
+                    url = "/779PrevYrMyPay"; 
+                }
+            $("#popup_container1").prop("src", url+"/FAQ.aspx");
+            $("body").css("overflow", "hidden");
+        }
+        ////function to check bankname
+        function fnBankNameAlreadyExist() {
+            alert("Bank Name already exist, please choose different bank name");
+        }
+        ////function to show bankname
+        function show_bankers_popup() {
+            $(".mask").show();
+            $('#bankers_popup').show();
+            $(".popup_close_btn").show();
+            var isPrvYr =$("#isPrv").val().toLowerCase();
+            if(isPrvYr == "true")
+                {    
+                    url = "/779PrevYrMyPay"; 
+                }
+            $("#bank_container").prop("src", url+"/PreferredBankers.aspx");
+            $("body").css("overflow", "hidden");
+        }
+    </script>
+    
+    <title>My Forms</title>
+    <link href="Styles/styles.css" rel="stylesheet" type="text/css" />
+    <script src="Scripts/jquery.tipTip.js" type="text/javascript"></script>
+    <link href="Styles/tipTip.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+	/* <![CDATA[ */
+	#mypayMenu img.icon { border-style:none;vertical-align:middle; }
+	#mypayMenu img.separator { border-style:none;display:block; }
+	#mypayMenu img.horizontal-separator { border-style:none;vertical-align:middle; }
+	#mypayMenu ul { list-style:none;margin:0;padding:0;width:auto; }
+	#mypayMenu ul.dynamic { z-index:1; }
+	#mypayMenu a { text-decoration:none;white-space:nowrap;display:block; }
+	#mypayMenu a.static { padding-left:0.15em;padding-right:0.15em; }
+	#mypayMenu a.popout { background-image:url("/779/WebResource.axd?d=PuwXiTDgn83T9Tx1J9dc9sYTXvJ3si36BaXdzt5DVTgE3pAwylJC2pMXBQlOhTlrKoNvU7WLU8GCHAyTgSfZsEJI3gFvUp2VTaimo7APE9c1&t=638460022569584809");background-repeat:no-repeat;background-position:right center;padding-right:14px; }
+	/* ]]> */
+</style><title>
+
+</title></head>
+<body>
+    <form method="post" action="./MyForms.aspx" id="form1">
+<div class="aspNetHidden">
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUJODM0MTY2MDExD2QWAmYPZBYCAgEPZBYIAgEPFgIeB1Zpc2libGVoZAIEDw8WAh4EVGV4dAUkQW5uYXBwYSBNYWhhdmVlciBLeWF0YW5hdmFyKDIxNDU5OTcpZGQCBQ88KwANAQwUKwAGBRMwOjAsMDoxLDA6MiwwOjMsMDo0FCsAAhYEHwEFDU15RGVmaW5pdGlvbnMeC05hdmlnYXRlVXJsBSN+L1VJLk15RkJQL0ZsZXhpYmxlQmVuZWZpdFBsYW4uYXNweGQUKwACFgQfAQUJTXlVcGRhdGVzHgpTZWxlY3RhYmxlaBQrAAUFDzA6MCwwOjEsMDoyLDA6MxQrAAIWBB8BBRRQZXJzb25hbCBJbmZvcm1hdGlvbh8CBSZ+L1VJLk15VXBkYXRlL1BlcnNvbmFsSW5mb3JtYXRpb24uYXNweGQUKwACFgQfAQUlTW9iaWxlKEZCUCkgLyBCcm9hZGJhbmQgUmVpbWJ1cnNlbWVudB8CBS1+L1VJLk15VXBkYXRlL0NyZWRpdENhcmRQYXltYW50RGV0YWlsc01CLmFzcHhkFCsAAhYEHwEFFkxlYXZlIFRyYXZlbCBBbGxvd2FuY2UfAgUcfi9VSS5NeVVwZGF0ZS9MVEFDbGFpbXMuYXNweGQUKwACFgQfAQUIQWR2YW5jZXMfAgUjfi9VSS5NeVVwZGF0ZS9NdWx0aXBsZUFkdmFuY2VzLmFzcHhkFCsAAhYEHwEFDU15SW52ZXN0bWVudHMfA2gUKwAGBRMwOjAsMDoxLDA6MiwwOjMsMDo0FCsAAhYEHwEFHUluY29tZSBUYXggQ29tcHV0YXRpb24gTWV0aG9kHwIFJ34vVUkuTXlJbnZlc3RtZW50cy9JbmNvbWVUYXhNZXRob2QuYXNweGQUKwACFgQfAQUeSW52ZXN0bWVudCBEZWNsYXJhdGlvbi9BY3R1YWxzHwIFLH4vVUkuTXlJbnZlc3RtZW50cy9JbnZlc3RtZW50QWN0dWFsRGVjbC5hc3B4ZBQrAAIWBB8BBQNIUkEfAgUrfi9VSS5NeUludmVzdG1lbnRzL090aGVySW52ZXN0bWVudHNIUkEuYXNweGQUKwACFgQfAQUWTG9zcyBvbiBIb3VzZSBQcm9wZXJ0eR8CBTN+L1VJLk15SW52ZXN0bWVudHMvT3RoZXJJbnZlc3RtZW50c0hvdXNpbmdMb2FuLmFzcHhkFCsAAhYEHwEFFUhpZ2hlciBFZHVjYXRpb24gTG9hbh8CBS5+L1VJLk15SW52ZXN0bWVudHMvT3RoZXJJbnZlc3RtZW50c0hFTG9hbi5hc3B4ZBQrAAIWBB8BBQxNeVN0YXRlbWVudHMfAgUnfi9VSS5NeVN0YXRlbWVudHMvTXlTdGF0ZW1lbnRzTWFpbi5hc3B4ZBQrAAIWBB8BBQdNeUZvcm1zHwIFDn4vTXlGb3Jtcy5hc3B4ZGQCBg9kFgICCw8WAh8AaGRk0O0+L87yr475H6gGIGsCA/LOui8Rt3K7OIHKbRnw7no=" />
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['form1'];
+if (!theForm) {
+    theForm = document.form1;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="/779/WebResource.axd?d=kJe2JYq1qocjHMQhP283RBiJ0_9WOjpknVWNizJPHOSlo1gHLonKf3a6dvgEfjF8zowA7eZufPqxDsewIYAPQ_6qu3c_ZoVw3pjnA1vrF5s1&amp;t=638460022569584809" type="text/javascript"></script>
+
+
+<script src="/779/ScriptResource.axd?d=qddtjOE88QH9GLKCuwuq48_XXQHeE8Ah3dL3nYXDMC2b3Iy6qMqMcCzB_dUtj5kh1Ua-DowVEk8A25YZLE_aISlbhAvB7pks170tpIE314eT1-tzJ6LDix4VA0nJS9YQ99fEtlGiQXkcpZit3sANfg2&amp;t=ffffffffa8ad04d3" type="text/javascript"></script>
+<script src="/779/ScriptResource.axd?d=6LnfBeeRsKTMmSdWpmcU7QVYnMze-c-7oTdSyzp8dnNY1L1F8HSYfSsmG0WQoDHR_lSTzF0KepES5Tj3gCNSGZVG8Q_N6ogAjKmAIwUuFQ4iJ7hLsfaPNDcr0a6FwGvY8sVSDZj-fFAVk66ufNBl9Ijz7nk5_Q2-GBWsYkAau141&amp;t=74258c30" type="text/javascript"></script>
+<script src="/779/ScriptResource.axd?d=fMHOfcV0QSmaLf2SHnHDKkx5vR3ebhUpprkHe64ClwqOp1rz-G8cbm0EXimlLpU2hlHN8CUb4VognESWEEqKiX8vu5lCWWikRNbiTPZ7noG4IZtExsDbxw6KU606mUqDwkxff05xzq70RbGE27Q7nrU7ECo6jPA31bRVi59AwpJ0I8Zo8haGG0k5YpkjABJN0&amp;t=74258c30" type="text/javascript"></script>
+<div class="aspNetHidden">
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="36EF6FCA" />
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="/wEdAAxcrrZo4OD+HNSObytm8/UVMpK5OjIagoY/rqp9WE+9iQWaYf6a/VDSWP8ob6RFwydV4UohV1AIgNk1VJ1ommyAH0thDc+r7TnquKaR/SdIQo8FxC6GudUS2XHuZKLskIgBcDa0oHftH19G1IkiS6t1bzYp8x5yySky4IVoeBreC0jgylG/q96aZhJiD8gOFLp4AmSIEyXLIZ0UqlRD1kUNpEzK/PSWV5z8jgDV03Ds5wUG8k4avX7iXS2MpfHZA76YDzYxYNauBlH2vLDOldX6mSSAVURQGfO4xteujRGJAA==" />
+</div>      
+    <script type="text/javascript">
+//<![CDATA[
+Sys.WebForms.PageRequestManager._initialize('ctl00$scrManager', 'form1', [], [], [], 90, 'ctl00');
+//]]>
+</script>
+
+    <div id="wrapper">
+        <input type="hidden" value="false" id="isPrv" />
+        <input type="hidden" value="202425" id="finY" />
+        
+        <div id="header">
+            <div id="logo"><a ><img src="../images/MyPay_logo.png" alt="" title="" id="mylogo" /></a>
+                <div id="showPrv" style="position: absolute;padding-top: 65px;padding-left: 30px;">
+                  <p style="font-size: 16px;"><strong id="finyr"></strong></p></div>
+            </div>
+
+            <div id="mainNav">
+                <div id="nav1">
+                    <ul>
+                        <li><a href="/779/Default.aspx" class="home" id="defaultpage"><img class="spaceClass" src="/779/images/spacer.png" width="26" height="26" title="Home"  alt=""/></a></li>
+                        <li><a href="#" onclick="show_bankers_popup();" class="preferred_bank"><img class="spaceClass" src="/779/images/spacer.png" width="26" height="26" title="Preferred Bankers" /></a></li>
+                        <li><a href="#" class="faq">
+                            <img class="spaceClass" src="/779/images/spacer.png" onclick="show_faq_popup();" width="26" height="26" title="Downloads & Links" alt="" /></a></li>
+                        <li>
+                        <a id="lnkLogout" title="Logout" class="logout" href="javascript:__doPostBack(&#39;ctl00$lnkLogout&#39;,&#39;&#39;)" style="color:White;"><span id="lblLogout" class="font-small" style="color:White;">Logout</span></a>
+                        <br />
+                            
+                        </li>
+                        
+
+                    </ul>
+                    <div class="clear">
+                        &nbsp;</div>
+                    <div id="welcome">
+                            <span id="lblWelcomeUser" class="font-small">Welcome </span>
+                            <div class="clear">
+                            <span id="lblMasterPageUserName">Annappa Mahaveer Kyatanavar(2145997)</span>
+                            </div>
+                            
+                    </div>
+                </div>
+                <div id="nav2">
+                    <div id="menuHolder">
+                        <!-- Menu Starts -->
+                        <div class="menu-left-wrapper">
+                        </div>
+                        <div class="menu-middle-wrapper">
+                            <a href="#mypayMenu_SkipLink" style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden;">Skip Navigation Links</a><div id="mypayMenu">
+	<ul class="level1">
+		<li><a class="level1" href="UI.MyFBP/FlexibleBenefitPlan.aspx">MyDefinitions</a></li><li><a class="popout level1">MyUpdates</a><ul class="level2">
+			<li><a class="level2" href="UI.MyUpdate/PersonalInformation.aspx">Personal Information</a></li><li><a class="level2" href="UI.MyUpdate/CreditCardPaymantDetailsMB.aspx">Mobile(FBP) / Broadband Reimbursement</a></li><li><a class="level2" href="UI.MyUpdate/LTAClaims.aspx">Leave Travel Allowance</a></li><li><a class="level2" href="UI.MyUpdate/MultipleAdvances.aspx">Advances</a></li>
+		</ul></li><li><a class="popout level1">MyInvestments</a><ul class="level2">
+			<li><a class="level2" href="UI.MyInvestments/IncomeTaxMethod.aspx">Income Tax Computation Method</a></li><li><a class="level2" href="UI.MyInvestments/InvestmentActualDecl.aspx">Investment Declaration/Actuals</a></li><li><a class="level2" href="UI.MyInvestments/OtherInvestmentsHRA.aspx">HRA</a></li><li><a class="level2" href="UI.MyInvestments/OtherInvestmentsHousingLoan.aspx">Loss on House Property</a></li><li><a class="level2" href="UI.MyInvestments/OtherInvestmentsHELoan.aspx">Higher Education Loan</a></li>
+		</ul></li><li><a class="level1" href="UI.MyStatements/MyStatementsMain.aspx">MyStatements</a></li><li><a class="level1" href="MyForms.aspx">MyForms</a></li>
+	</ul>
+</div><a id="mypayMenu_SkipLink"></a>
+                        </div>
+                        <div class="menu-right-wrapper">
+                        </div>
+                        <!-- Menu Ends -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="contentArea">
+            <div>
+                
+    <div>
+        <h2>
+            MyForms <a class="helpTooltip alignRight">Help
+                <img src="images/spacer.png" class="questionMark" alt="Help" title="Help" />
+                <div class="tooltipContent">
+                    <div class="tooltipHeading">
+                        MyForms</div>
+                    <div>
+                        <img src="images/spacer.png" class="arrow" /></div>
+                    <ul class="dot_list">
+                       <li> You can download and print forms from this page for submissions to finance, wherever
+                        required.</li>
+                        </ul>
+                </div>
+            </a>
+        </h2>
+        <div class="formContainer formContainerAlignCenter">
+            <div class="formsInnerContentArea">
+                <table width="100%" class="commonTb">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <span class="alignLeft">Required documents for Tax proof submission</span>
+                                
+                                
+                                <input type="submit" name="ctl00$MainContent$BtnNew" value="Download" id="MainContent_BtnNew" class="alignRight" />
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="alignLeft">Guidelines for Investment document submission</span>
+                                
+                                
+                                <input type="submit" name="ctl00$MainContent$BtnTaxBenefit" value="Download" id="MainContent_BtnTaxBenefit" class="alignRight" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="alignLeft">LOHP Form of verification</span>
+                                
+                                
+                                <input type="submit" name="ctl00$MainContent$BtnVerificationForm" value="Download" id="MainContent_BtnVerificationForm" class="alignRight" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="alignLeft">LOHP Declaration for joint ownership</span>
+                                
+                                
+                                <input type="submit" name="ctl00$MainContent$BtnJointOwnershipForm" value="Download" id="MainContent_BtnJointOwnershipForm" class="alignRight" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="alignLeft">HRA Rent receipt</span>
+                                
+                                
+                                <input type="submit" name="ctl00$MainContent$BtnRentReceipt" value="Download" id="MainContent_BtnRentReceipt" class="alignRight" />
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td>
+                                <span class="alignLeft">LIC enrollment procedure</span>
+                                
+                                
+                                <input type="submit" name="ctl00$MainContent$BtnRevisedLIC" value="Download" id="MainContent_BtnRevisedLIC" class="alignRight" />
+                            </td>
+                        </tr>
+                      
+                                
+                                
+                              
+                        <tr>
+                            <td>
+                                <span class="alignLeft">Driver Salary Slip</span>
+                                
+                                
+                                <input type="submit" name="ctl00$MainContent$BtnDriverSalForm" value="Download" id="MainContent_BtnDriverSalForm" class="alignRight" />
+                            </td>
+                        </tr>
+
+                                
+                                
+                              
+                        <tr>
+                            <td>
+                                <span class="alignLeft">Group Superannuation Form</span> 
+                                
+                                
+                                <input type="submit" name="ctl00$MainContent$BtnGroupSASchemeForm" value="Download" id="MainContent_BtnGroupSASchemeForm" class="alignRight" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="alignLeft">Physically Challenged 10 IA Form</span>
+                                
+                                
+                                <input type="submit" name="ctl00$MainContent$BtnFORM10IAForm" value="Download" id="MainContent_BtnFORM10IAForm" class="alignRight" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="alignLeft">HRA and LOHP Declaration</span>                         
+                                <input type="submit" name="ctl00$MainContent$BtnHRALOHP" value="Download" id="MainContent_BtnHRALOHP" class="alignRight" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+            </div>
+            <div>
+                
+            </div>
+        </div>
+    </div>
+    <div id="foot">
+    </div>
+    <div class="mask">
+    </div>
+    <div id="faq_popup">
+        <a class="popup_close_btn" title="Close"></a>
+        <iframe id="popup_container1" src=""></iframe>
+    </div>
+    <div id="bankers_popup">
+        <a class="popup_close_btn" title="Close"></a>
+        <iframe id="bank_container" src=""></iframe>
+    </div>
+    
+<script type='text/javascript'>new Sys.WebForms.Menu({ element: 'mypayMenu', disappearAfter: 500, orientation: 'horizontal', tabIndex: 0, disabled: false });</script></form>
+</body>
+</html>

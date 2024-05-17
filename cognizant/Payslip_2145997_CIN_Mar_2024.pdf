@@ -1,0 +1,25 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><title>
+
+</title></head>
+<body>
+    <form method="post" action="./DownloadFile.aspx?companyid=L1dFyfPrRBpVdGGVdOVyrw%3d%3d&amp;month=HVi1b%2b23KKN3GoE4nfzBaA%3d%3d&amp;year=rQgGteAGcR0AbCTLuBzGjQ%3d%3d&amp;val=1adysZ70hM3r4W8JkAaweA%3d%3d" id="form1">
+<div class="aspNetHidden">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwULLTE2MTY2ODcyMjlkZAWkyvc/kIBY/fzhx9idg470RfDuUJIMHkGPd2CMsvSx" />
+</div>
+
+<div class="aspNetHidden">
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="78BCA023" />
+</div>
+    <div>
+    
+    </div>
+    
+<script>window.parent.location.href = '../UI.ErrorPages/CustomError.aspx';</script></form>
+</body>
+</html>
